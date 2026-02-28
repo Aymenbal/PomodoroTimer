@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Focus | Pomodoro</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23dcdcdc"/></svg>'>
 
@@ -21,6 +25,8 @@ body {
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    /* Prevents pull-to-refresh on mobile */
+    overscroll-behavior-y: contain; 
 }
 
 /* CLOCK */
@@ -34,7 +40,7 @@ body {
 
 .time {
     font-family: 'Oswald', sans-serif;
-    font-size: 28vw; /* Massive on PC */
+    font-size: 33vw; /* Increased from 28vw to be massive on PC */
     font-weight: 700;
     line-height: 1;
     letter-spacing: 2vw;
@@ -45,10 +51,10 @@ body {
 
 .split-line {
     position: absolute;
-    top: 50%;
+    top: 51%; /* Shifted slightly past 50% for perfect optical centering on the font */
     left: -5%;
     width: 110%;
-    height: 1.5vw;
+    height: 0.5vw; /* Made razor thin */
     background: #000;
     transform: translateY(-50%);
     z-index: 2;
@@ -56,7 +62,7 @@ body {
 
 .mode {
     position: absolute;
-    top: 15%;
+    top: 10%; /* Nudged up slightly to give the bigger numbers room */
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Playfair Display', serif;
@@ -89,13 +95,13 @@ body {
     padding: 12px 20px;
     border-radius: 40px;
     border: 1px solid #333;
-    width: 900px; /* Ideal max width for PC */
-    max-width: 95vw; /* Prevents overflow on smaller screens */
+    width: 900px; 
+    max-width: 95vw; 
     justify-content: space-between;
 }
 
 button {
-    flex: 1 1 0; /* MAGIC RULE: Forces all buttons to be exactly equal in width */
+    flex: 1 1 0; 
     background: transparent;
     color: #dcdcdc;
     border: 1px solid #555;
@@ -110,6 +116,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Removes default mobile tap highlights */
+    -webkit-tap-highlight-color: transparent; 
 }
 
 button:hover {
@@ -263,20 +271,20 @@ button:hover {
         letter-spacing: 2vh;
     }
     .split-line {
-        height: 2vh;
+        height: 1vh; /* Thinner line for mobile landscape */
+        top: 51%;
     }
     .controls-wrapper {
         bottom: 5%; 
     }
     .controls {
-        width: 95vw; /* Perfectly hugs the edges of the phone */
+        width: 95vw; 
         padding: 8px 10px;
         gap: 6px; 
         border-radius: 30px;
     }
     button {
         padding: 8px 0;
-        /* clamp() automatically scales the text down just enough to fit nicely on any size phone */
         font-size: clamp(8px, 1.2vw, 12px); 
         letter-spacing: 0.5px;
     }
@@ -392,7 +400,7 @@ async function toggleFullScreen(){
                 await screen.orientation.lock("landscape");
             }
         } catch (err) {
-            console.log("Error attempting full-screen or orientation lock:", err);
+            console.log("Fullscreen API is restricted on this browser/device.");
         }
     } else {
         if (document.exitFullscreen) {
