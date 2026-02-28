@@ -4,14 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Focus | Minimalist Pomodoro Timer & Deep Work Clock</title>
+<title>Minimalist Pomodoro Timer Online – Free Deep Work Focus Clock</title>
 <meta name="description" content="A free, distraction-free Pomodoro timer for deep work. Features full-screen landscape mode, ambient noise, and a minimalist cinematic UI.">
 <meta name="keywords" content="pomodoro timer, minimalist clock, deep work, focus app, study timer, aesthetic desk clock, flip clock">
 
-<meta property="og:title" content="Focus | Minimalist Pomodoro Timer">
+<meta property="og:title" content="Minimalist Pomodoro Timer Online">
 <meta property="og:description" content="A cinematic, distraction-free clock for deep work and studying.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://YOUR-VERCEL-URL-HERE.vercel.app">
+<meta property="og:url" content="https://YOUR-DOMAIN-HERE.com">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "Focus Minimalist Pomodoro Timer",
+ "applicationCategory": "ProductivityApplication",
+ "operatingSystem": "Web",
+ "offers": {
+   "@type": "Offer",
+   "price": "0",
+   "priceCurrency": "USD"
+ }
+}
+</script>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,21 +39,24 @@
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23dcdcdc"/></svg>'>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Playfair+Display:wght@700&display=swap');
-
 body {
     margin: 0;
     padding: 0;
     background-color: #000;
     color: #dcdcdc;
+    font-family: sans-serif;
+    /* Removed overflow: hidden so the page can scroll down to the SEO text */
+}
+
+/* APP SECTION - Keeps the timer perfectly framed in the viewport */
+.app-section {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    /* Prevents pull-to-refresh on mobile */
-    overscroll-behavior-y: contain; 
+    min-height: 100vh;
+    overflow: hidden; 
 }
 
 /* CLOCK */
@@ -48,7 +70,7 @@ body {
 
 .time {
     font-family: 'Oswald', sans-serif;
-    font-size: 33vw; /* Massive on PC */
+    font-size: 33vw; 
     font-weight: 700;
     line-height: 1;
     letter-spacing: 2vw;
@@ -59,10 +81,10 @@ body {
 
 .split-line {
     position: absolute;
-    top: 51%; /* Shifted slightly past 50% for perfect optical centering on the font */
+    top: 51%; 
     left: -5%;
     width: 110%;
-    height: 0.5vw; /* Made razor thin */
+    height: 0.5vw; 
     background: #000;
     transform: translateY(-50%);
     z-index: 2;
@@ -70,7 +92,7 @@ body {
 
 .mode {
     position: absolute;
-    top: 10%; /* Nudged up slightly to give the bigger numbers room */
+    top: 10%; 
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Playfair Display', serif;
@@ -124,7 +146,6 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Removes default mobile tap highlights */
     -webkit-tap-highlight-color: transparent; 
 }
 
@@ -136,6 +157,40 @@ button:hover {
 .active-btn {
     background: #dcdcdc;
     color: #000;
+}
+
+/* SEO CONTENT SECTION - Lives below the fold */
+.seo-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px 120px 20px;
+    color: #a0a0a0;
+    line-height: 1.8;
+}
+
+.seo-section h1, .seo-section h2, .seo-section h3 {
+    font-family: 'Playfair Display', serif;
+    color: #dcdcdc;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.seo-section h1 {
+    font-size: 32px;
+    text-align: center;
+}
+
+.seo-section h2 {
+    font-size: 24px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.seo-section p {
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 /* ENVIRONMENT OVERLAY */
@@ -161,11 +216,10 @@ button:hover {
     text-align: center;
     max-width: 600px;
     padding: 20px;
-    max-height: 90vh; /* Prevents overflow on short screens */
-    overflow-y: auto; /* Adds scroll if needed */
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-/* Hides scrollbar for clean look */
 .setup-content::-webkit-scrollbar {
     display: none;
 }
@@ -206,33 +260,6 @@ button:hover {
     border-color: #fff;
 }
 
-/* New SEO Text Block inside the overlay */
-.seo-text-block {
-    background: #0a0a0a;
-    border: 1px solid #222;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 40px;
-    text-align: left;
-}
-
-.seo-text-block h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #dcdcdc;
-    letter-spacing: 1px;
-}
-
-.seo-text-block p {
-    font-family: sans-serif;
-    font-size: 13px;
-    color: #888;
-    line-height: 1.6;
-    margin: 0;
-}
-
 .close-setup {
     margin-top: 20px;
     border: 1px solid #444;
@@ -241,64 +268,35 @@ button:hover {
     cursor: pointer;
 }
 
-/* --- ROTATE DEVICE LOCK SCREEN --- */
-.rotate-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: #000;
-    z-index: 9999;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
-
-.rotate-icon {
-    width: 60px;
-    height: 100px;
-    border: 4px solid #dcdcdc;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    position: relative;
-    animation: rotatePhone 2.5s infinite ease-in-out;
-}
-
-.rotate-icon::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 4px;
-    background-color: #dcdcdc;
-    border-radius: 2px;
-}
-
-@keyframes rotatePhone {
-    0% { transform: rotate(0deg); }
-    40% { transform: rotate(-90deg); }
-    60% { transform: rotate(-90deg); }
-    100% { transform: rotate(0deg); }
-}
-
-.rotate-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    letter-spacing: 2px;
-    color: #dcdcdc;
-    text-transform: uppercase;
-}
-
 /* --- MOBILE RESPONSIVENESS (VERTICAL / PORTRAIT) --- */
 @media (max-width: 768px) and (orientation: portrait) {
-    .rotate-overlay {
-        display: flex;
+    .mode {
+        font-size: 5vw;
+        top: 20%;
     }
-    .clock-container, .controls-wrapper, .mode, .setup-overlay {
-        display: none !important;
+    .time {
+        font-size: 42vw; 
+        letter-spacing: 1vw;
+    }
+    .split-line {
+        height: 1.5vw;
+    }
+    .controls {
+        flex-wrap: wrap; 
+        width: 90vw;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 30px;
+    }
+    button {
+        flex: auto;
+        width: calc(33% - 10px); /* Stacks buttons neatly on portrait */
+        padding: 10px 0;
+        font-size: 11px;
+    }
+    .seo-section h1 {
+        font-size: 26px;
     }
 }
 
@@ -340,38 +338,47 @@ button:hover {
 
 <body>
 
-<div class="rotate-overlay">
-    <div class="rotate-icon"></div>
-    <div class="rotate-text">Please Rotate Device</div>
-</div>
+<main class="app-section">
+    <div class="mode" id="mode-text">Work</div>
 
-<div class="mode" id="mode-text">Work</div>
-
-<div class="clock-container">
-    <div class="time" id="time-display">25 00</div>
-    <div class="split-line"></div>
-</div>
-
-<div class="controls-wrapper" id="controls-wrapper">
-    <div class="controls">
-        <button onclick="setMode('Work',25)" class="active-btn" id="btn-25">25 Min</button>
-        <button onclick="setMode('Work',50)" id="btn-50">50 Min</button>
-        <button onclick="toggleTimer()" id="start-btn">Start</button>
-        <button onclick="resetTimer()">Reset</button>
-        <button onclick="toggleAudio()" id="audio-btn">🔈 Noise: Off</button>
-        <button onclick="toggleFullScreen()" id="fullscreen-btn">Full Screen</button>
-        <button onclick="toggleSetup()">Environment</button>
+    <div class="clock-container">
+        <div class="time" id="time-display">25 00</div>
+        <div class="split-line"></div>
     </div>
-</div>
+
+    <div class="controls-wrapper" id="controls-wrapper">
+        <div class="controls">
+            <button onclick="setMode('Work',25)" class="active-btn" id="btn-25">25 Min</button>
+            <button onclick="setMode('Work',50)" id="btn-50">50 Min</button>
+            <button onclick="toggleTimer()" id="start-btn">Start</button>
+            <button onclick="resetTimer()">Reset</button>
+            <button onclick="toggleAudio()" id="audio-btn">🔈 Noise: Off</button>
+            <button onclick="toggleFullScreen()" id="fullscreen-btn">Full Screen</button>
+            <button onclick="toggleSetup()">Environment</button>
+        </div>
+    </div>
+</main>
+
+<section class="seo-section">
+    <h1>Minimalist Pomodoro Timer Online</h1>
+    <p>Welcome to Focus, the ultimate distraction-free web app designed to help you execute deep work. Whether you are a developer coding a new feature, a student preparing for exams, or a professional managing daily tasks, this cinematic flip clock keeps you grounded in your workflow.</p>
+
+    <h2>How the Pomodoro Technique Works</h2>
+    <p>The Pomodoro Technique is a time management method proven to increase productivity and reduce burnout. By breaking your workflow into focused intervals (typically 25 or 50 minutes), followed by short restorative breaks, you train your brain to maintain a state of flow.</p>
+    <ul>
+        <li><strong>Step 1:</strong> Select a single task to focus on.</li>
+        <li><strong>Step 2:</strong> Set the timer for a 25-minute or 50-minute block.</li>
+        <li><strong>Step 3:</strong> Work without interruptions until the alarm chimes.</li>
+        <li><strong>Step 4:</strong> Take a 5 or 10-minute break to stretch and reset.</li>
+    </ul>
+
+    <h2>Why Use a Distraction-Free Focus Timer?</h2>
+    <p>Modern workspaces are cluttered with tabs, notifications, and complex UI menus. We built this clock to be completely invisible until you need it. Features like the full-screen landscape mode and integrated ambient noise cancellation allow you to transform any screen into a dedicated productivity hub.</p>
+</section>
 
 <div id="setup-overlay" class="setup-overlay">
     <div class="setup-content">
         <div class="setup-title">Deep Work Setup</div>
-
-        <div class="seo-text-block">
-            <h2>The Pomodoro Technique</h2>
-            <p>This minimalist Pomodoro timer is designed to enhance deep work and intense study sessions. By breaking tasks into 25 or 50-minute intervals separated by short breaks, this distraction-free cinematic clock helps developers, students, and professionals maintain a consistent flow state.</p>
-        </div>
 
         <div class="setup-item">
             <div class="setup-name">Noise Cancellation</div>
@@ -395,11 +402,11 @@ button:hover {
     </div>
 </div>
 
-<audio id="bg-audio" loop>
+<audio id="bg-audio" loop preload="auto">
 <source src="https://assets.mixkit.co/active_storage/sfx/2403/2403-preview.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="ding-audio">
+<audio id="ding-audio" preload="auto">
 <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
 </audio>
 
