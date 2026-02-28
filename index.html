@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Focus | Pomodoro</title>
+
+<title>Focus | Minimalist Pomodoro Timer & Deep Work Clock</title>
+<meta name="description" content="A free, distraction-free Pomodoro timer for deep work. Features full-screen landscape mode, ambient noise, and a minimalist cinematic UI.">
+<meta name="keywords" content="pomodoro timer, minimalist clock, deep work, focus app, study timer, aesthetic desk clock, flip clock">
+
+<meta property="og:title" content="Focus | Minimalist Pomodoro Timer">
+<meta property="og:description" content="A cinematic, distraction-free clock for deep work and studying.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://YOUR-VERCEL-URL-HERE.vercel.app">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -40,7 +48,7 @@ body {
 
 .time {
     font-family: 'Oswald', sans-serif;
-    font-size: 33vw; /* Increased from 28vw to be massive on PC */
+    font-size: 33vw; /* Massive on PC */
     font-weight: 700;
     line-height: 1;
     letter-spacing: 2vw;
@@ -153,18 +161,25 @@ button:hover {
     text-align: center;
     max-width: 600px;
     padding: 20px;
+    max-height: 90vh; /* Prevents overflow on short screens */
+    overflow-y: auto; /* Adds scroll if needed */
+}
+
+/* Hides scrollbar for clean look */
+.setup-content::-webkit-scrollbar {
+    display: none;
 }
 
 .setup-title {
     font-family: 'Playfair Display', serif;
     font-size: 3vw;
     letter-spacing: 4px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     text-transform: uppercase;
 }
 
 .setup-item {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .setup-name {
@@ -191,8 +206,35 @@ button:hover {
     border-color: #fff;
 }
 
+/* New SEO Text Block inside the overlay */
+.seo-text-block {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.seo-text-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #dcdcdc;
+    letter-spacing: 1px;
+}
+
+.seo-text-block p {
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+}
+
 .close-setup {
-    margin-top: 40px;
+    margin-top: 20px;
     border: 1px solid #444;
     padding: 8px 18px;
     border-radius: 20px;
@@ -271,7 +313,7 @@ button:hover {
         letter-spacing: 2vh;
     }
     .split-line {
-        height: 1vh; /* Thinner line for mobile landscape */
+        height: 1vh; 
         top: 51%;
     }
     .controls-wrapper {
@@ -287,6 +329,10 @@ button:hover {
         padding: 8px 0;
         font-size: clamp(8px, 1.2vw, 12px); 
         letter-spacing: 0.5px;
+    }
+    .setup-title {
+        font-size: 5vh;
+        margin-bottom: 20px;
     }
 }
 </style>
@@ -321,6 +367,11 @@ button:hover {
 <div id="setup-overlay" class="setup-overlay">
     <div class="setup-content">
         <div class="setup-title">Deep Work Setup</div>
+
+        <div class="seo-text-block">
+            <h2>The Pomodoro Technique</h2>
+            <p>This minimalist Pomodoro timer is designed to enhance deep work and intense study sessions. By breaking tasks into 25 or 50-minute intervals separated by short breaks, this distraction-free cinematic clock helps developers, students, and professionals maintain a consistent flow state.</p>
+        </div>
 
         <div class="setup-item">
             <div class="setup-name">Noise Cancellation</div>
