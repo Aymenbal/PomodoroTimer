@@ -4,14 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Minimalist Pomodoro Timer Online – Free Deep Work Focus Clock</title>
-<meta name="description" content="A free, distraction-free Pomodoro timer for deep work. Features full-screen landscape mode, ambient noise, and a minimalist cinematic UI.">
+<title>Minimalist Pomodoro Timer Online (Free 25 & 50 Min Focus Clock)</title>
+<meta name="description" content="Free minimalist Pomodoro timer online for deep work and studying. Choose 25 or 50 minute focus sessions, use full screen mode, and stay distraction-free. No signup required.">
 <meta name="keywords" content="pomodoro timer, minimalist clock, deep work, focus app, study timer, aesthetic desk clock, flip clock">
 
-<meta property="og:title" content="Minimalist Pomodoro Timer Online">
-<meta property="og:description" content="A cinematic, distraction-free clock for deep work and studying.">
+<link rel="canonical" href="https://YOUR-DOMAIN-HERE.com/">
+
+<meta property="og:title" content="Minimalist Pomodoro Timer Online – Free Focus Clock">
+<meta property="og:description" content="A clean, distraction-free Pomodoro timer for deep work. 25 and 50 minute sessions. Full screen focus mode.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://YOUR-DOMAIN-HERE.com">
+<meta property="og:url" content="https://YOUR-DOMAIN-HERE.com/">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Minimalist Pomodoro Timer Online">
+<meta name="twitter:description" content="Free deep work timer with 25 and 50 minute sessions. No signup. No distractions.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +27,7 @@
 {
  "@context": "https://schema.org",
  "@type": "SoftwareApplication",
- "name": "Focus Minimalist Pomodoro Timer",
+ "name": "Minimalist Pomodoro Timer",
  "applicationCategory": "ProductivityApplication",
  "operatingSystem": "Web",
  "offers": {
@@ -45,7 +51,15 @@ body {
     background-color: #000;
     color: #dcdcdc;
     font-family: sans-serif;
-    /* Removed overflow: hidden so the page can scroll down to the SEO text */
+}
+
+/* --- FULLSCREEN OVERRIDES (Transforms back into the original App) --- */
+body.fullscreen-active {
+    overflow: hidden !important; /* Locks scrolling */
+}
+body.fullscreen-active .seo-section,
+body.fullscreen-active .seo-footer {
+    display: none !important; /* Completely hides all SEO text and links */
 }
 
 /* APP SECTION - Keeps the timer perfectly framed in the viewport */
@@ -163,7 +177,7 @@ button:hover {
 .seo-section {
     max-width: 800px;
     margin: 0 auto;
-    padding: 80px 20px 120px 20px;
+    padding: 80px 20px 40px 20px;
     color: #a0a0a0;
     line-height: 1.8;
 }
@@ -188,9 +202,45 @@ button:hover {
     padding-bottom: 10px;
 }
 
-.seo-section p {
+.seo-section p, .seo-section ul {
     font-size: 16px;
     margin-bottom: 20px;
+}
+
+.seo-section li {
+    margin-bottom: 10px;
+}
+
+/* SPIDERWEB INTERNAL LINKING FOOTER */
+.seo-footer {
+    text-align: center;
+    padding: 60px 20px;
+    border-top: 1px solid #222;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    font-size: 14px;
+}
+
+.seo-footer p {
+    color: #888;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.seo-footer a {
+    color: #a0a0a0;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.2s;
+    display: inline-block;
+    padding: 5px 0;
+}
+
+.seo-footer a:hover {
+    color: #dcdcdc;
+    text-decoration: underline;
 }
 
 /* ENVIRONMENT OVERLAY */
@@ -291,12 +341,16 @@ button:hover {
     }
     button {
         flex: auto;
-        width: calc(33% - 10px); /* Stacks buttons neatly on portrait */
+        width: calc(33% - 10px); 
         padding: 10px 0;
         font-size: 11px;
     }
     .seo-section h1 {
         font-size: 26px;
+    }
+    .seo-footer a {
+        display: block;
+        margin: 10px 0;
     }
 }
 
@@ -360,21 +414,127 @@ button:hover {
 </main>
 
 <section class="seo-section">
-    <h1>Minimalist Pomodoro Timer Online</h1>
-    <p>Welcome to Focus, the ultimate distraction-free web app designed to help you execute deep work. Whether you are a developer coding a new feature, a student preparing for exams, or a professional managing daily tasks, this cinematic flip clock keeps you grounded in your workflow.</p>
+    <h1>Minimalist Pomodoro Timer Online for Deep Work and Focused Study</h1>
 
-    <h2>How the Pomodoro Technique Works</h2>
-    <p>The Pomodoro Technique is a time management method proven to increase productivity and reduce burnout. By breaking your workflow into focused intervals (typically 25 or 50 minutes), followed by short restorative breaks, you train your brain to maintain a state of flow.</p>
+    <p>This minimalist Pomodoro timer online was built for one purpose: helping you focus without distractions. No accounts. No dashboards. No clutter. Just a clean, large-format focus clock that lets you enter deep work instantly.</p>
+
+    <p>Whether you're coding, preparing for exams, writing, designing, or studying late at night, this distraction-free timer keeps your attention where it belongs — on the task in front of you.</p>
+
+    <h2>What Makes This Pomodoro Timer Different?</h2>
+
+    <p>Most productivity apps overwhelm you with features you never use. Complex menus. Task managers. Notifications. Social elements. This timer removes all of that.</p>
+
+    <p>Instead, you get:</p>
+
     <ul>
-        <li><strong>Step 1:</strong> Select a single task to focus on.</li>
-        <li><strong>Step 2:</strong> Set the timer for a 25-minute or 50-minute block.</li>
-        <li><strong>Step 3:</strong> Work without interruptions until the alarm chimes.</li>
-        <li><strong>Step 4:</strong> Take a 5 or 10-minute break to stretch and reset.</li>
+    <li>A clean minimalist interface</li>
+    <li>25 minute and 50 minute focus sessions</li>
+    <li>Automatic break transitions</li>
+    <li>Full screen deep work mode</li>
+    <li>Optional ambient background noise</li>
+    <li>No login required</li>
     </ul>
 
-    <h2>Why Use a Distraction-Free Focus Timer?</h2>
-    <p>Modern workspaces are cluttered with tabs, notifications, and complex UI menus. We built this clock to be completely invisible until you need it. Features like the full-screen landscape mode and integrated ambient noise cancellation allow you to transform any screen into a dedicated productivity hub.</p>
+    <p>The goal is simple: create an environment where focus feels natural.</p>
+
+    <h2>How the Pomodoro Technique Works</h2>
+
+    <p>The Pomodoro Technique is a structured time management method designed to increase concentration and prevent burnout. Instead of working endlessly until exhaustion, you break your work into focused intervals followed by short recovery breaks.</p>
+
+    <p>Here’s the basic structure:</p>
+
+    <ul>
+    <li>Work for 25 or 50 minutes</li>
+    <li>Take a 5 or 10 minute break</li>
+    <li>Repeat the cycle</li>
+    </ul>
+
+    <p>Over time, this rhythm trains your brain to enter flow faster and maintain it longer.</p>
+
+    <h2>25 Minute vs 50 Minute Focus Sessions</h2>
+
+    <p>The traditional Pomodoro interval is 25 minutes. It works well for beginners, students, and tasks that require frequent resets.</p>
+
+    <p>However, many developers, writers, and deep thinkers prefer longer 50 minute focus sessions. Why?</p>
+
+    <ul>
+    <li>Less context switching</li>
+    <li>Deeper cognitive immersion</li>
+    <li>Fewer interruptions</li>
+    <li>Stronger momentum</li>
+    </ul>
+
+    <p>This is why this focus clock supports both modes.</p>
+
+    <h2>A Distraction-Free Deep Work Timer</h2>
+
+    <p>Deep work requires more than motivation. It requires environment design. When your screen is full of notifications, open tabs, and visual clutter, your attention fragments.</p>
+
+    <p>This timer uses a large-format clock with minimal typography and full-screen support so your display becomes a dedicated focus surface.</p>
+
+    <p>Open it on a second monitor. Use it in full screen mode. Let the room go quiet.</p>
+
+    <h2>Designed for Students</h2>
+
+    <p>If you're preparing for exams, writing research papers, or studying complex subjects, structured sessions help prevent mental fatigue.</p>
+
+    <p>This study timer online makes it easy to commit to focused blocks without overthinking the process. Just press start and begin.</p>
+
+    <h2>Designed for Professionals and Creators</h2>
+
+    <p>Writers, developers, designers, and entrepreneurs often struggle with fragmented attention. Email, Slack, social media — constant interruptions break flow.</p>
+
+    <p>Using a minimalist desk clock like this creates a visible commitment to uninterrupted time.</p>
+
+    <h2>Why Minimal Design Improves Focus</h2>
+
+    <p>Minimalism isn’t aesthetic preference — it’s cognitive strategy. Every visual element competes for attention. When you remove unnecessary components, your brain processes less noise.</p>
+
+    <p>That’s why this aesthetic Pomodoro timer uses:</p>
+
+    <ul>
+    <li>Large typography</li>
+    <li>Monochrome color palette</li>
+    <li>Invisible controls</li>
+    <li>Zero visual clutter</li>
+    </ul>
+
+    <p>The result is calm visual space that supports concentration.</p>
+
+    <h2>Use It Anywhere</h2>
+
+    <p>This free Pomodoro timer runs entirely in your browser. No downloads. No installation. Works on desktop, laptop, or tablet.</p>
+
+    <p>Open it during work sessions. Use it while studying. Keep it running on a secondary display as a dedicated deep work timer.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Is this Pomodoro timer free?</h3>
+    <p>Yes. It is completely free and does not require registration.</p>
+
+    <h3>Does it work on mobile?</h3>
+    <p>Yes. It is responsive and supports full screen mode.</p>
+
+    <h3>What is the best focus interval?</h3>
+    <p>For most people, 25 minutes is ideal for structured productivity. Advanced users often prefer 50 minute sessions for deeper work.</p>
+
+    <h3>Can I use this as a study timer?</h3>
+    <p>Absolutely. Many students use 25 minute study cycles followed by 5 minute breaks to maintain mental clarity.</p>
+
 </section>
+
+<footer class="seo-footer">
+    <p>Explore More Focus Tools</p>
+    <nav>
+        <a href="/">Minimalist Pomodoro Timer</a> | 
+        <a href="/aesthetic-pomodoro-timer">Aesthetic Pomodoro Timer</a> | 
+        <a href="/50-minute-timer">50 Minute Focus Timer</a> | 
+        <a href="/deep-work-clock">Deep Work Clock</a> | 
+        <a href="/study-timer-online">Online Study Timer</a> | 
+        <a href="/adhd-focus-timer">ADHD Focus Timer</a> | 
+        <a href="/minimalist-desk-clock">Minimalist Desk Clock</a>
+    </nav>
+</footer>
 
 <div id="setup-overlay" class="setup-overlay">
     <div class="setup-content">
@@ -472,13 +632,25 @@ async function toggleFullScreen(){
     }
 }
 
-document.addEventListener('fullscreenchange',()=>{
-    fullscreenBtn.textContent = document.fullscreenElement ? 
-        'Exit Full Screen' : 'Full Screen';
+/* Watch for Fullscreen changes to hide/show SEO text and lock scrolling */
+document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+        fullscreenBtn.textContent = 'Exit Full Screen';
+        document.body.classList.add('fullscreen-active');
+    } else {
+        fullscreenBtn.textContent = 'Full Screen';
+        document.body.classList.remove('fullscreen-active');
+    }
 });
-document.addEventListener('webkitfullscreenchange', ()=>{
-    fullscreenBtn.textContent = document.webkitFullscreenElement ? 
-        'Exit Full Screen' : 'Full Screen';
+
+document.addEventListener('webkitfullscreenchange', () => {
+    if (document.webkitFullscreenElement) {
+        fullscreenBtn.textContent = 'Exit Full Screen';
+        document.body.classList.add('fullscreen-active');
+    } else {
+        fullscreenBtn.textContent = 'Full Screen';
+        document.body.classList.remove('fullscreen-active');
+    }
 });
 
 /* Timer display */
@@ -557,5 +729,37 @@ function toggleAudio(){
 
 updateDisplay();
 </script>
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [{
+   "@type": "Question",
+   "name": "Is this Pomodoro timer free?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes, this Pomodoro timer is completely free and does not require registration."
+   }
+ },
+ {
+   "@type": "Question",
+   "name": "What is the best focus interval?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Most users prefer 25 minute sessions, while others choose 50 minute sessions for deeper concentration."
+   }
+ },
+ {
+   "@type": "Question",
+   "name": "Can I use this as a study timer?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Absolutely. Many students use 25 minute study cycles followed by 5 minute breaks to maintain mental clarity."
+   }
+ }]
+}
+</script>
+
 </body>
 </html>
