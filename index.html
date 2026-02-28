@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus | Pomodoro</title>
+
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="%23dcdcdc"/></svg>'>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Playfair+Display:wght@700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* CLOCK */
+.clock-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.time {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28vw; /* Massive on PC */
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 2vw;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.split-line {
+    position: absolute;
+    top: 50%;
+    left: -5%;
+    width: 110%;
+    height: 1.5vw;
+    background: #000;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.mode {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5vw;
+    letter-spacing: 4px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* CONTROLS */
+.controls-wrapper {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 20;
+}
+
+.controls-wrapper.visible {
+    opacity: 1;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    background: rgba(20,20,20,0.9);
+    padding: 12px 20px;
+    border-radius: 40px;
+    border: 1px solid #333;
+    width: 900px; /* Ideal max width for PC */
+    max-width: 95vw; /* Prevents overflow on smaller screens */
+    justify-content: space-between;
+}
+
+button {
+    flex: 1 1 0; /* MAGIC RULE: Forces all buttons to be exactly equal in width */
+    background: transparent;
+    color: #dcdcdc;
+    border: 1px solid #555;
+    padding: 10px 0;
+    font-size: 13px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    background: #dcdcdc;
+    color: #000;
+}
+
+.active-btn {
+    background: #dcdcdc;
+    color: #000;
+}
+
+/* ENVIRONMENT OVERLAY */
+.setup-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 100;
+}
+
+.setup-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.setup-content {
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.setup-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3vw;
+    letter-spacing: 4px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+}
+
+.setup-item {
+    margin-bottom: 50px;
+}
+
+.setup-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.setup-desc {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 14px;
+}
+
+.setup-link {
+    text-decoration: none;
+    color: #dcdcdc;
+    border-bottom: 1px solid #555;
+    padding-bottom: 2px;
+    transition: all 0.2s;
+}
+
+.setup-link:hover {
+    color: #fff;
+    border-color: #fff;
+}
+
+.close-setup {
+    margin-top: 40px;
+    border: 1px solid #444;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* --- ROTATE DEVICE LOCK SCREEN --- */
+.rotate-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #000;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.rotate-icon {
+    width: 60px;
+    height: 100px;
+    border: 4px solid #dcdcdc;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    animation: rotatePhone 2.5s infinite ease-in-out;
+}
+
+.rotate-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 4px;
+    background-color: #dcdcdc;
+    border-radius: 2px;
+}
+
+@keyframes rotatePhone {
+    0% { transform: rotate(0deg); }
+    40% { transform: rotate(-90deg); }
+    60% { transform: rotate(-90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.rotate-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: #dcdcdc;
+    text-transform: uppercase;
+}
+
+/* --- MOBILE RESPONSIVENESS (VERTICAL / PORTRAIT) --- */
+@media (max-width: 768px) and (orientation: portrait) {
+    .rotate-overlay {
+        display: flex;
+    }
+    .clock-container, .controls-wrapper, .mode, .setup-overlay {
+        display: none !important;
+    }
+}
+
+/* --- MOBILE RESPONSIVENESS (HORIZONTAL / LANDSCAPE) --- */
+@media (max-height: 500px) and (orientation: landscape), (max-width: 950px) and (orientation: landscape) {
+    .mode {
+        font-size: 6vh;
+        top: 5%; 
+    }
+    .time {
+        font-size: 65vh; 
+        letter-spacing: 2vh;
+    }
+    .split-line {
+        height: 2vh;
+    }
+    .controls-wrapper {
+        bottom: 5%; 
+    }
+    .controls {
+        width: 95vw; /* Perfectly hugs the edges of the phone */
+        padding: 8px 10px;
+        gap: 6px; 
+        border-radius: 30px;
+    }
+    button {
+        padding: 8px 0;
+        /* clamp() automatically scales the text down just enough to fit nicely on any size phone */
+        font-size: clamp(8px, 1.2vw, 12px); 
+        letter-spacing: 0.5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="rotate-overlay">
+    <div class="rotate-icon"></div>
+    <div class="rotate-text">Please Rotate Device</div>
+</div>
+
+<div class="mode" id="mode-text">Work</div>
+
+<div class="clock-container">
+    <div class="time" id="time-display">25 00</div>
+    <div class="split-line"></div>
+</div>
+
+<div class="controls-wrapper" id="controls-wrapper">
+    <div class="controls">
+        <button onclick="setMode('Work',25)" class="active-btn" id="btn-25">25 Min</button>
+        <button onclick="setMode('Work',50)" id="btn-50">50 Min</button>
+        <button onclick="toggleTimer()" id="start-btn">Start</button>
+        <button onclick="resetTimer()">Reset</button>
+        <button onclick="toggleAudio()" id="audio-btn">🔈 Noise: Off</button>
+        <button onclick="toggleFullScreen()" id="fullscreen-btn">Full Screen</button>
+        <button onclick="toggleSetup()">Environment</button>
+    </div>
+</div>
+
+<div id="setup-overlay" class="setup-overlay">
+    <div class="setup-content">
+        <div class="setup-title">Deep Work Setup</div>
+
+        <div class="setup-item">
+            <div class="setup-name">Noise Cancellation</div>
+            <div class="setup-desc">Total isolation from external distraction.</div>
+            <a href="YOUR_AFFILIATE_LINK_1" target="_blank" class="setup-link">View</a>
+        </div>
+
+        <div class="setup-item">
+            <div class="setup-name">Monitor Light Bar</div>
+            <div class="setup-desc">Focused lighting without desk clutter.</div>
+            <a href="YOUR_AFFILIATE_LINK_2" target="_blank" class="setup-link">View</a>
+        </div>
+
+        <div class="setup-item">
+            <div class="setup-name">Ambient Light</div>
+            <div class="setup-desc">Soft background lighting for long sessions.</div>
+            <a href="YOUR_AFFILIATE_LINK_3" target="_blank" class="setup-link">View</a>
+        </div>
+
+        <button onclick="toggleSetup()" class="close-setup">Close</button>
+    </div>
+</div>
+
+<audio id="bg-audio" loop>
+<source src="https://assets.mixkit.co/active_storage/sfx/2403/2403-preview.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="ding-audio">
+<source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+</audio>
+
+<script>
+let currentDuration = 25 * 60;
+let timeRemaining = currentDuration;
+let timerInterval = null;
+let isRunning = false;
+let lastWorkDuration = 25;
+let mouseTimeout = null;
+
+const timeDisplay = document.getElementById('time-display');
+const modeText = document.getElementById('mode-text');
+const startBtn = document.getElementById('start-btn');
+const bgAudio = document.getElementById('bg-audio');
+const dingAudio = document.getElementById('ding-audio');
+const controlsWrapper = document.getElementById('controls-wrapper');
+const setupOverlay = document.getElementById('setup-overlay');
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+const audioBtn = document.getElementById('audio-btn');
+
+/* Mouse fade / Touch fade for mobile */
+function showControls(){
+    controlsWrapper.classList.add('visible');
+    clearTimeout(mouseTimeout);
+    mouseTimeout = setTimeout(()=>{
+        controlsWrapper.classList.remove('visible');
+    },3000);
+}
+document.addEventListener('mousemove', showControls);
+document.addEventListener('touchstart', showControls);
+showControls();
+
+/* Environment toggle */
+function toggleSetup(){
+    setupOverlay.classList.toggle('active');
+}
+
+/* Fullscreen with Orientation Lock */
+async function toggleFullScreen(){
+    if(!document.fullscreenElement){
+        try {
+            if (document.documentElement.requestFullscreen) {
+                await document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { 
+                await document.documentElement.webkitRequestFullscreen();
+            }
+            if (screen.orientation && screen.orientation.lock) {
+                await screen.orientation.lock("landscape");
+            }
+        } catch (err) {
+            console.log("Error attempting full-screen or orientation lock:", err);
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { 
+            document.webkitExitFullscreen();
+        }
+        if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock();
+        }
+    }
+}
+
+document.addEventListener('fullscreenchange',()=>{
+    fullscreenBtn.textContent = document.fullscreenElement ? 
+        'Exit Full Screen' : 'Full Screen';
+});
+document.addEventListener('webkitfullscreenchange', ()=>{
+    fullscreenBtn.textContent = document.webkitFullscreenElement ? 
+        'Exit Full Screen' : 'Full Screen';
+});
+
+/* Timer display */
+function updateDisplay(){
+    const minutes = Math.floor(timeRemaining/60);
+    const seconds = timeRemaining%60;
+    const minStr = minutes.toString().padStart(2,'0');
+    const secStr = seconds.toString().padStart(2,'0');
+    timeDisplay.textContent = `${minStr} ${secStr}`;
+    document.title = `${minStr}:${secStr} - ${modeText.textContent}`;
+}
+
+function setMode(mode,minutes){
+    modeText.textContent = mode;
+    currentDuration = minutes*60;
+    timeRemaining = currentDuration;
+    if(mode==='Work') lastWorkDuration=minutes;
+    document.getElementById('btn-25').classList.remove('active-btn');
+    document.getElementById('btn-50').classList.remove('active-btn');
+    if(mode==='Work'){
+        if(minutes===25) document.getElementById('btn-25').classList.add('active-btn');
+        if(minutes===50) document.getElementById('btn-50').classList.add('active-btn');
+    }
+    resetTimer();
+}
+
+function toggleTimer(){
+    if(isRunning){
+        clearInterval(timerInterval);
+        startBtn.textContent='Start';
+        isRunning=false;
+    } else {
+        timerInterval=setInterval(()=>{
+            if(timeRemaining>0){
+                timeRemaining--;
+                updateDisplay();
+            } else {
+                clearInterval(timerInterval);
+                dingAudio.play();
+                isRunning=false;
+                if(modeText.textContent==='Work'){
+                    if(currentDuration===25*60){
+                        setMode('Break',5);
+                        toggleTimer();
+                    } else {
+                        setMode('Break',10);
+                        toggleTimer();
+                    }
+                } else {
+                    setMode('Work',lastWorkDuration);
+                }
+            }
+        },1000);
+        startBtn.textContent='Pause';
+        isRunning=true;
+    }
+}
+
+function resetTimer(){
+    clearInterval(timerInterval);
+    timeRemaining=currentDuration;
+    isRunning=false;
+    startBtn.textContent='Start';
+    updateDisplay();
+}
+
+function toggleAudio(){
+    if(bgAudio.paused){
+        bgAudio.play();
+        audioBtn.textContent = '🔊 Noise: On';
+    } else {
+        bgAudio.pause();
+        audioBtn.textContent = '🔈 Noise: Off';
+    }
+}
+
+updateDisplay();
+</script>
+</body>
+</html>
